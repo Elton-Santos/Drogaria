@@ -3,6 +3,7 @@ package br.com.drogaria.test;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import br.com.drogaria.dao.ProdutoDAO;
@@ -29,7 +30,7 @@ public class ProdutoDAOTeste {
 	}
 
 	@Test
-	@org.junit.Ignore
+	//@org.junit.Ignore
 	public void listar() throws SQLException {
 		ProdutoDAO dao = new ProdutoDAO();
 		ArrayList<Produto> lista = dao.listar();
@@ -56,6 +57,7 @@ public class ProdutoDAOTeste {
 	}
 	
 	@Test
+	@Ignore
 	public void deleta() throws SQLException{
 		Produto p = new Produto();
 		p.setCodigo(15L);
