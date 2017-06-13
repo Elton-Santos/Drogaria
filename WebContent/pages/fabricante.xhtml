@@ -15,9 +15,9 @@
 		<h:form id="frmFabListagem">
 			<p:dataTable id="tblFabricantes" widgetVar="tabelaFabricantes"
 				emptyMessage="Nenhum registro encontrado"
-				value="#{MBFabricante.itens}" var="item" 
-				filteredValue="#{MBFabricante.itensFiltrados}"
-				paginator="true" rows="10">
+				value="#{MBFabricante.itens}" var="item"
+				filteredValue="#{MBFabricante.itensFiltrados}" paginator="true"
+				rows="10">
 
 				<f:facet name="header">
 					Fabricante - Listagem
@@ -36,13 +36,15 @@
 					<p:commandButton icon="ui-icon-trash"
 						oncomplete="PF('dlgFabExcluir').show();"
 						update="frmFabExcluir:pnlFabExcluir">
-						<f:setPropertyActionListener target="#{MBFabricante.fabricante}" value="#{item}"/>
-						</p:commandButton>
+						<f:setPropertyActionListener target="#{MBFabricante.fabricante}"
+							value="#{item}" />
+					</p:commandButton>
 					<p:commandButton icon="ui-icon-pencil"
 						oncomplete="PF('dlgFabEditar').show();"
-						update=":frmFabEditar:pnlFabEditar" >
-						<f:setPropertyActionListener target="#{MBFabricante.fabricante}" value="#{item}"/>
-						</p:commandButton>
+						update=":frmFabEditar:pnlFabEditar">
+						<f:setPropertyActionListener target="#{MBFabricante.fabricante}"
+							value="#{item}" />
+					</p:commandButton>
 				</p:column>
 
 				<f:facet name="footer">
@@ -60,19 +62,22 @@
 
 			<h:form id="frmFabNovo">
 				<h:panelGrid id="pnlFabNovo" columns="2">
-					<p:outputLabel value="Descrição: " />
-					<p:inputText size="30" maxlength="50"
-						value="#{MBFabricante.fabricante.descricao}" />
+					<p:outputLabel for="txtDescFabNovo" value="Descrição: " />
+					<p:inputText id="txtDescFabNovo" size="30" maxlength="50"
+						value="#{MBFabricante.fabricante.descricao}" required="true"
+						requiredMessage="O campo descrição é obrigatório." />
 				</h:panelGrid>
 
 				<h:panelGrid columns="2">
 					<p:commandButton value="Gravar"
 						actionListener="#{MBFabricante.novo}"
-						oncomplete="PF('dLgFabNovo').hide(); tabelaFabricantes.clearFilters();"
+						oncomplete="verificar(xhr, status, args, 'dlgFabNovo', 'tabelaFabricantes');"
 						update=":frmFabListagem:tblFabricantes :msgGlobal" />
 
-					<p:commandButton value="Cancelar"
-						onclick="PF('dLgFabNovo').hide();" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dLgFabNovo').hide();">
+						<p:resetInput target="pnlFabNovo" />
+					</p:commandButton>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
@@ -94,8 +99,10 @@
 						actionListener="#{MBFabricante.excluir}"
 						oncomplete="PF('dlgFabExcluir').hide(); tabelaFabricantes.clearFilters();"
 						update=":frmFabListagem:tblFabricantes :msgGlobal" />
-					<p:commandButton value="Cancelar"
-						onclick="PF('dlgFabExcluir').hide();" />
+					<p:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgFabExcluir').hide();">
+						<p:resetInput target="pnlFabExcluir" />
+					</p:commandButton>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
@@ -107,17 +114,21 @@
 					<p:outputLabel value="Código" />
 					<h:outputText value="#{MBFabricante.fabricante.codigo}" />
 
-					<p:outputLabel value="Descrição:" />
-					<p:inputText value="#{MBFabricante.fabricante.descricao}" size="30"
-						maxlength="50" />
+					<p:outputLabel for="txtDescProdEditar" value="Descrição:" />
+					<p:inputText id="txtDescProdEditar"
+						value="#{MBFabricante.fabricante.descricao}" size="30"
+						maxlength="50" required="true"
+						requiredMessage="O campo descrição é obrigatório" />
 				</h:panelGrid>
 				<h:panelGrid columns="2">
 					<p:commandButton value="Editar"
 						actionListener="#{MBFabricante.editar}"
-						oncomplete="PF('dlgFabEditar').hide(); tabelaFabricantes.clearFilters();"
+						oncomplete="verificar(xhr, status, args, 'dlgFabEditar', 'tabelaFabricantes');"
 						update=":frmFabListagem:tblFabricantes :msgGlobal" />
-					<h:commandButton value="Cancelar"
-						onclick="PF('dlgFabEditar').hide();" />
+					<h:commandButton value="Cancelar" process="@this"
+						onclick="PF('dlgFabEditar').hide();">
+						<p:resetInput target="pnlFabNovo" />
+					</h:commandButton>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

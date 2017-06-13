@@ -99,4 +99,27 @@ public class ProdutoBean {
 			JSFUtil.adicionarMensagemErro(ex.getMessage());
 		}
 	}
+
+	public void prepararEditar() {
+		try {
+			FabricanteDAO dao = new FabricanteDAO();
+			combofabricantes = dao.listar();
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			JSFUtil.adicionarMensagemErro(ex.getMessage());
+		}
+	}
+
+	public void editar() {
+		try {
+			ProdutoDAO dao = new ProdutoDAO();
+			dao.editar(produto);
+			itens = dao.listar();
+
+			JSFUtil.adicionarMensagemSucesso("Produto alterado com sucesso.");
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+			JSFUtil.adicionarMensagemErro(ex.getMessage());
+		}
+	}
 }
